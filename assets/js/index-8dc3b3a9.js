@@ -1,0 +1,1 @@
+import{_ as s}from"./index-cd6168aa.js";import{o as t,b as n}from"./vendor-a70d4a36.js";const o={class:"settings"};const r=s({},[["render",function(s,r){return t(),n("div",o," Settings ")}]]);export{r as default};
