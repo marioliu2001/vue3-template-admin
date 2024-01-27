@@ -1,1 +1,0 @@
-import{_ as r}from"./index-cd6168aa.js";import{o,b as s}from"./vendor-a70d4a36.js";const t={class:"reports"};const e=r({},[["render",function(r,e){return o(),s("div",t," Reports ")}]]);export{e as default};
