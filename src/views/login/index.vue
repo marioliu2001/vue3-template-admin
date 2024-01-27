@@ -18,27 +18,29 @@
             <el-form-item label="用户名" prop="username">
               <el-input :prefix-icon="User"
                         placeholder="请输入用户名"
-                        v-model="loginForm.username" />
+                        v-model="loginForm.username"/>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-input :prefix-icon="Lock"
                         type="password"
                         placeholder="请输入密码"
-                        show-password v-model="loginForm.password" />
+                        show-password v-model="loginForm.password"/>
             </el-form-item>
             <div class="login-button flex">
               <el-button
                   color="#fff"
                   icon="CircleClose"
                   round
-                  @click="resetForm(loginFormRef)">重置</el-button>
+                  @click="resetForm(loginFormRef)">重置
+              </el-button>
               <el-button
                   color="#4db6ac"
                   icon="UserFilled"
                   round
                   :loading-icon="Eleme"
                   :loading="isLoading"
-                  @click="submitForm(loginFormRef)">登录</el-button>
+                  @click="submitForm(loginFormRef)">登录
+              </el-button>
             </div>
           </el-form>
         </div>
@@ -53,6 +55,9 @@ import { ref, onMounted, reactive } from 'vue'
 import { User, Lock, Eleme } from '@element-plus/icons-vue'
 import useThemeStore from '@/stores/modules/theme.js'
 import { useLoginStore } from '@/stores/modules/login.js'
+import { loginApi } from '@/api/index.js'
+import router from '@/router/index.js'
+
 const themeStore = useThemeStore()
 const loginStore = useLoginStore()
 
@@ -85,10 +90,36 @@ const submitForm = async (formEl) => {
     if (valid) {
       // 校验通过去登录
       isLoading.value = true
-      loginStore.doLogin(loginForm).finally(() => {
-        // 别管成功还是失败都关闭loading
+
+      // 调用登录接口
+      // loginStore.doLogin(loginForm).finally(() => {
+      //   // 别管成功还是失败都关闭loading
+      //   isLoading.value = false
+      // })
+      //  doLogin (userForm) {
+      //   const username = userForm.username
+      //   const password = userForm.password
+      //   // 所有的异常都在http.js中处理了 只需要判断res和res.code的值就行
+      //   const res = await loginApi(username, password)
+      //   if (res && res.code === 200) {
+      //     // 添加token
+      //     this.token = res.data.tokenValue
+      //     // 获取用户信息
+      //     await this.doInfo()
+      //     // 跳转主页
+      //     await router.push('/')
+      //   }
+      // },
+      // 模拟登录接口
+      setTimeout(async () => {
+        // 添加token
+        loginStore.token = '123'
+        // 获取用户信息
+        loginStore.userInfo.avatarUrl = 'https://c0.jdbstatic.com/avatars/jb/JbER.jpg'
+        // 跳转主页
+        await router.push('/')
         isLoading.value = false
-      })
+      }, 2000)
     } else {
       isLoading.value = false
       console.log('error submit!', fields)
@@ -109,19 +140,21 @@ const resetForm = (formEl) => {
   //background-image: url("@/assets/images/login-bg.jpg");
   background-size: cover;
 
-  .login-form{
+  .login-form {
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    h2{
+
+    h2 {
       color: #fff;
       text-align: center;
       margin-bottom: 20px;
       font-size: 40px;
     }
-    .el-form{
+
+    .el-form {
       width: 80%;
       margin: 0 auto;
       padding: 50px;
@@ -129,10 +162,11 @@ const resetForm = (formEl) => {
       border-radius: 10px;
       box-shadow: 0 0 10px #fff;
 
-      .el-form-item{
+      .el-form-item {
         margin-bottom: 30px;
       }
-      .el-button{
+
+      .el-button {
         width: 100%;
       }
     }
